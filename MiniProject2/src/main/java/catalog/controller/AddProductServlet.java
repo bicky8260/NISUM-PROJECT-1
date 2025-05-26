@@ -23,7 +23,13 @@ public class AddProductServlet extends HttpServlet {
         String priceStr = request.getParameter("price");
         String discountStr = request.getParameter("discount");
         String discountPriceStr = request.getParameter("discountPrice");
+        System.out.println("Paramater set!");
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         try (
                 Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
         ) {
@@ -44,10 +50,9 @@ public class AddProductServlet extends HttpServlet {
                 psProduct.setDouble(5, price);
                 psProduct.setInt(6, discount);
                 psProduct.setDouble(7, discountPrice);
-                System.out.println("after set"
-                );
+                System.out.println("after set");
                 psProduct.executeUpdate();
-
+                System.out.println("after execute");
                 try (ResultSet rs = psProduct.getGeneratedKeys()) {
                     if (rs.next()) {
                         int productId = rs.getInt(1);
@@ -65,7 +70,6 @@ public class AddProductServlet extends HttpServlet {
                                         psProdCat.setInt(1, categoryId);
                                         psProdCat.setInt(2, productId);
                                         psProdCat.executeUpdate();
-
                                         conn.commit();
                                         response.getWriter().write("Product added and linked to category successfully");
                                         return;

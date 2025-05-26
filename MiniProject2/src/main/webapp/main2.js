@@ -5,14 +5,15 @@ function addProductItem(){
 function addItem() {
   console.log("function called");
   const formData = new URLSearchParams();
-  formData.append('name', document.getElementById('name').value);
-  console.log(document.getElementById('name').value);
+  console.log(document.getElementById('product').value);
+  formData.append('name', document.getElementById('product').value);
   formData.append('sku', document.getElementById('sku').value);
-  formData.append('categoryName', document.getElementById('categoryName').value);
+  console.log(document.getElementById('sku').value);
+  formData.append('categoryName', document.getElementById('category').value);
   formData.append('size', document.getElementById('size').value);
   formData.append('price', document.getElementById('price').value);
-  formData.append('discount', document.getElementById('discount').value);
-  formData.append('discountPrice', document.getElementById('discountPrice').value);
+  formData.append('discount', document.getElementById('discountPercent').value);
+  formData.append('discountPrice', document.getElementById('discountAmount').value);
 
   console.log('Sending:', formData.toString()); // Debug line
 
